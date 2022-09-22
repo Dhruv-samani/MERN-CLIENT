@@ -45,7 +45,9 @@ const Login = () => {
   };
 
 
-  // const devEnv = process.env.NODE_ENV !== "production";
+  const devEnv = process.env.NODE_ENV !== "production";
+  const clientId = devEnv ? "748458108283-f3tjls41o5vm7g2apjurra2mqrs967gh.apps.googleusercontent.com" : "748458108283-ebtutdb0a2c31ugj91rh4g7e3h1s5oka.apps.googleusercontent.com"
+  //748458108283-ebtutdb0a2c31ugj91rh4g7e3h1s5oka.apps.googleusercontent.com
 
 
 
@@ -109,7 +111,7 @@ const Login = () => {
               />
             </MDBValidationItem>
             <div className="col-12">
-              <MDBBtn style={{ width: "100%" }} className="mt-2">
+              <MDBBtn style={{ width: "100%" }} color='info' className="mt-2">
                 {loading && (
                   <MDBSpinner
                     size="sm"
@@ -118,13 +120,13 @@ const Login = () => {
                     className="me-2"
                   />
                 )}
-                Login
+                <MDBIcon className="me-2" fas  icon="sign-in-alt"/>Login
               </MDBBtn>
             </div>
           </MDBValidation>
           <br />
           <GoogleLogin
-            clientId="748458108283-f3tjls41o5vm7g2apjurra2mqrs967gh.apps.googleusercontent.com"
+            clientId={clientId}
             render={(renderProps) => (
               <MDBBtn
                 style={{ width: "100%" }}

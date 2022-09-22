@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import {
   MDBCard,
@@ -12,7 +13,7 @@ import {
   MDBCardGroup,
 } from "mdb-react-ui-kit";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { deleteTour, getToursByUser } from "../redux/features/tourSlice";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
@@ -22,6 +23,7 @@ const Dashboard = () => {
   const { userTours, loading } = useSelector((state) => ({ ...state.tour }));
   const userId = user?.result?._id;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userId) {
@@ -55,14 +57,28 @@ const Dashboard = () => {
         alignContent: "center",
       }}
     >
+      <MDBBtn
+        tag="a"
+        color="none"
+        style={{ float: "left", color: "#000", marginTop: "5px" }}
+        onClick={() => navigate("/")}
+      >
+        <MDBIcon
+          fas
+          size="lg"
+          icon="long-arrow-alt-left"
+          style={{ float: "left" }}
+        />
+      </MDBBtn>
+
       {userTours.length === 0 && (
-        <h3>No tour available with the user: {user?.result?.name}</h3>
+        <h3>No tour available with the user :-) {user?.result?.name}</h3>
       )}
 
       {userTours.length > 0 && (
         <>
-          <h5 className="text-center">Dashboard: {user?.result?.name}</h5>
-          <hr style={{ maxWidth: "570px" }} />
+          <h5 className="text-center">Dashboard :-) {user?.result?.name}</h5>
+          <hr style={{ maxWidth: "600px" }} />
         </>
       )}
 

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import {
   MDBCard,
@@ -7,6 +8,7 @@ import {
   MDBCardImage,
   MDBRow,
   MDBCol,
+  MDBIcon,
   MDBBtn,
   MDBCardGroup,
 } from "mdb-react-ui-kit";
@@ -41,8 +43,21 @@ const TagTours = () => {
         alignContent: "center",
       }}
     >
-      <h3 className="text-center">Tours with tag: {tag}</h3>
-      <hr style={{ maxWidth: "570px" }} />
+      <MDBBtn
+              tag="a"
+              color="none"
+              style={{ float: "left", color: "#000", marginTop: '10px' }}
+              onClick={() => navigate("/")}
+            >
+              <MDBIcon
+                fas
+                size="lg"
+                icon="long-arrow-alt-left"
+                style={{ float: "left" }}
+              />
+            </MDBBtn>
+      <h3 className="text-center">Tours with tag :-) {tag}</h3>
+      <hr style={{ maxWidth: "600px" }} />
       {tagTours &&
         tagTours.map((item) => (
           <MDBCardGroup key={item._id}>

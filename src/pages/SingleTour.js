@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import {
   MDBCard,
@@ -33,7 +34,7 @@ const SingleTour = () => {
   return (
     <>
       <MDBContainer>
-        <MDBCard className="mb-3 mt-2">
+        <MDBCard className="" style={{marginTop: '75px'}}>
           <MDBCardImage
             position="top"
             style={{ width: "100%", maxHeight: "600px" }}
@@ -72,6 +73,9 @@ const SingleTour = () => {
                 size="lg"
               />
               <small className="text-muted">
+                {moment(tour.createdAt).format('LLLL')}
+                {" "},
+                {" "}
                 {moment(tour.createdAt).fromNow()}
               </small>
             </MDBCardText>

@@ -1,14 +1,14 @@
 import axios from "axios";
 
-// const devEnv = process.env.NODE_ENV !== "production";
+const devEnv = process.env.NODE_ENV !== "production";
 
-// const { REACT_APP_DEV_API, REACT_APP_PROD_API } = process.env;
+const { REACT_APP_DEV_API, REACT_APP_PROD_API } = process.env;
 
-// const API = axios.create({
-//   baseURL: `${devEnv ? REACT_APP_DEV_API : REACT_APP_PROD_API}`,
-// });
+const API = axios.create({
+  baseURL: `${devEnv ? REACT_APP_DEV_API : REACT_APP_PROD_API}`,
+});
 
-const API = axios.create({ baseURL: "http://localhost:4000" })
+// const API = axios.create({ baseURL: "http://localhost:4000" })
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("profile")) {

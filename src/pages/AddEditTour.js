@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import {
   MDBCard,
   MDBCardBody,
   MDBValidation,
   MDBBtn,
+  MDBIcon,
   MDBInput,
   MDBTextArea,
   MDBValidationItem,
@@ -90,8 +92,36 @@ const AddEditTour = () => {
       }}
       className="container"
     >
-      <MDBCard alignment="center">
+        {id ? <MDBBtn
+          tag="a"
+          color="none"
+          style={{ float: "left", color: "#000", marginTop: "5px" }}
+          onClick={() => navigate("/deshboard")}
+        >
+          <MDBIcon
+            fas
+            size="lg"
+            icon="long-arrow-alt-left"
+            style={{ float: "left" }}
+          />
+        </MDBBtn> : 
+        <MDBBtn
+        tag="a"
+        color="none"
+        style={{ float: "left", color: "#000", marginTop: "5px" }}
+        onClick={() => navigate("/")}
+      >
+        <MDBIcon
+          fas
+          size="lg"
+          icon="long-arrow-alt-left"
+          style={{ float: "left" }}
+        />
+      </MDBBtn>
+      }
         <h5>{id ? "Update Tour" : "Add Tour"}</h5>
+        <hr style={{ maxWidth: "600px" }} />
+      <MDBCard alignment="center">
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} className="row g-3" noValidate>
             <MDBValidationItem feedback='Please provide title.' invalid className="col-md-12">
