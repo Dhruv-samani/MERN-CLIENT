@@ -92,7 +92,7 @@ const CardTour = ({
           >
             {!user?.result ? (
               <MDBTooltip title="Please login to like tour" tag="a">
-                <Likes />
+                <Link to="/login"> <Likes /> </Link>
               </MDBTooltip>
             ) : (
               <Likes />

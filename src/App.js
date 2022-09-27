@@ -16,6 +16,7 @@ import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import NotFound from './pages/NotFound';
 import TagTours from './pages/TagTours';
+import Footer from './components/Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ function App() {
           <Route path='/deshboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path='*' element={<NotFound />} />
         </Routes>
+        <Footer />
       </div>
     </BrowserRouter>
   );
