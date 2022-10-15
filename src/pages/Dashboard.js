@@ -78,7 +78,7 @@ const Dashboard = () => {
       {userTours.length > 0 && (
         <>
           <h5 className="text-center">Dashboard :-) {user?.result?.name}</h5>
-          <hr style={{ maxWidth: "600px" }} />
+          {/* <hr style={{ maxWidth: "600px" }} /> */}
         </>
       )}
 
@@ -89,12 +89,14 @@ const Dashboard = () => {
             <MDBCard style={{ maxWidth: "600px" }} className="mt-2">
               <MDBRow className="g-0">
                 <MDBCol md="4">
+                <Link to={`/tour/${item._id}`}>
                   <MDBCardImage
                     className="rounded"
                     src={item.imageFile}
                     alt={item.title}
                     fluid
                   />
+                  </Link>
                 </MDBCol>
                 <MDBCol md="8">
                   <MDBCardBody>

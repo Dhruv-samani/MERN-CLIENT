@@ -12,7 +12,7 @@ import {
   MDBBtn,
   MDBCardGroup,
 } from "mdb-react-ui-kit";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { getToursByTag } from "../redux/features/tourSlice";
@@ -64,12 +64,14 @@ const TagTours = () => {
             <MDBCard style={{ maxWidth: "600px" }} className="mt-2">
               <MDBRow className="g-0">
                 <MDBCol md="4">
+                <Link to={`/tour/${item._id}`}>
                   <MDBCardImage
                     className="rounded"
                     src={item.imageFile}
                     alt={item.title}
                     fluid
                   />
+                  </Link>
                 </MDBCol>
                 <MDBCol md="8">
                   <MDBCardBody>
