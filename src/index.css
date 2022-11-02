@@ -6,7 +6,8 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
 .header-text {
@@ -16,7 +17,9 @@ code {
   font-size: 17px;
 }
 
-.navbar-nav{align-items: center;}
+.navbar-nav {
+  align-items: center;
+}
 
 .top-left {
   position: absolute;
@@ -70,4 +73,13 @@ h4:before {
 h4:after {
   left: 0.5em;
   margin-right: -50%;
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 0.5rem;
+  animation: fadeIn 700ms ease-in-out 1s both;
+  cursor: pointer;
+  z-index: 1;
 }

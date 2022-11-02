@@ -9,6 +9,8 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
 import "react-toastify/dist/ReactToastify.css"
+import ScrollToTop from './components/ScrollToTop';
+import Spinner from './components/Spinner';
 // import Home from './pages/Home';
 // import Login from './pages/Login';
 // import Register from './pages/Register';
@@ -34,12 +36,13 @@ function App() {
     dispatch(setUser(user));
   }, [])
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div></div>}>
       <BrowserRouter>
         {/* <Coockies /> */}
         <div className="App">
           <Header />
           <ToastContainer />
+          <ScrollToTop />
           <Routes>
             <Route path='*' element={<NotFound />} />
             <Route exact path='/' element={<Home />} />
