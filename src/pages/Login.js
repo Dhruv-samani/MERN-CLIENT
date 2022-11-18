@@ -46,8 +46,7 @@ const Login = () => {
 
 
   const devEnv = process.env.NODE_ENV !== "production";
-  const clientId = devEnv ? "748458108283-f3tjls41o5vm7g2apjurra2mqrs967gh.apps.googleusercontent.com" : "748458108283-ebtutdb0a2c31ugj91rh4g7e3h1s5oka.apps.googleusercontent.com"
-  //748458108283-ebtutdb0a2c31ugj91rh4g7e3h1s5oka.apps.googleusercontent.com
+  const clientId = devEnv ? "" : ""
 
 
 
@@ -68,7 +67,7 @@ const Login = () => {
   useEffect(() => {
     function start() {
       gapi.client.init({
-        clientId: "748458108283-f3tjls41o5vm7g2apjurra2mqrs967gh.apps.googleusercontent.com",
+        clientId: "",
       });
     }
     gapi.load('client:auth2', start);
