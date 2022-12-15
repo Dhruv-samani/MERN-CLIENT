@@ -43,10 +43,13 @@ const Register = () => {
       dispatch(register({ formValue, navigate, toast }));
     }
   };
+
+
   const onInputChange = (e) => {
     let { name, value } = e.target;
     setFormValue({ ...formValue, [name]: value });
   };
+
   return (
     <div
       style={{
@@ -57,6 +60,7 @@ const Register = () => {
         marginTop: "120px",
       }}
     >
+      
       <MDBCard alignment="center">
         <MDBIcon fas icon="user-circle" className="fa-2x" />
         <h5>Sign Up</h5>

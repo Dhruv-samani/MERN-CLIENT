@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import * as api from "../api";
 
+
 export const login = createAsyncThunk("auth/login", async ({ formValue, navigate, toast }, { rejectWithValue }) => {
   try {
     const response = await api.signIn(formValue);
@@ -11,6 +12,7 @@ export const login = createAsyncThunk("auth/login", async ({ formValue, navigate
     return rejectWithValue(err.response.data)
   }
 });
+
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -35,7 +37,6 @@ export const googleSignIn = createAsyncThunk(
       toast.success("Google Sign-in Successfully");
       console.log('...');
       navigate("/");
-
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -56,10 +57,28 @@ const authSlice = createSlice({
       state.user = action.payload
     },
     setLogout: (state, action) => {
+      console.log('...', setLogout);
       localStorage.clear();
       state.user = null;
     }
   },
+  setProfile(state, action) {
+    state.user.result = action.payload;
+    let localStorageResult = JSON.parse(localStorage.getItem('profile'));
+    localStorageResult.result = action.payload;
+    localStorage.setItem('profile', JSON.stringify(localStorageResult));
+  },
+
+  removeUser(state) {
+    localStorage.removeItem('profile');
+    state.user = null;
+  },
+
+  clearError(state) {
+    state.error = '';
+  },
+
+
   extraReducers: {
     [login.pending]: (state, action) => {
       state.loding = true
@@ -100,7 +119,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser, setLogout } = authSlice.actions;
+export const { setUser, setLogout, setProfile } = authSlice.actions;
 
 
 export default authSlice.reducer;

@@ -36,3 +36,14 @@ export const getToursBySearch = (searchQuery) =>
 export const getTagTours = (tag) => API.get(`/tour/tag/${tag}`);
 export const getRelatedTours = (tags) => API.post(`/tour/relatedTours`, tags);
 export const likeTour = (id) => API.patch(`/tour/like/${id}`);
+
+export const loadMoreTours = ({ skip, limit }) =>
+  API.get(`/tours/load-more?skip=${skip}&limit=${limit}`);
+export const getAllTags = () => API.get('/tours/tags');
+
+
+export const getProfile = ({ _id }) => API.get(`/profiles/${_id}`);
+export const updateProfile = ({ _id, data }) =>
+  API.put(`/profiles/${_id}`, data);
+export const uploadImage = (imageData) =>
+  API.post('/uploads/images', imageData);

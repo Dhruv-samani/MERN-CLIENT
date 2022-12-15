@@ -13,10 +13,12 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { likeTour } from "../redux/features/tourSlice";
+import CategoryBadge from './CategoryBadge';
 
 const CardTour = ({
   imageFile,
   description,
+  category,
   title,
   tags,
   _id,
@@ -82,6 +84,7 @@ const CardTour = ({
         />
         </Link>
         <div className="top-left">{name}</div>
+        <div className="top-right"><CategoryBadge category={category} /></div>
         <span className="text-start tag-card">
           {tags.map((tag, index) => (
             <Link key={index} to={`/tours/tag/${tag}`}>{" "} #{tag}</Link>

@@ -21,11 +21,16 @@ const initialState = {
   title: "",
   description: "",
   tags: [],
+  category: '',
 };
+
+const categoryOptions = ['City', 'Beach', 'Mountain', 'Forest', 'Historic'];
+
 
 const AddEditTour = () => {
   const [tourData, setTourData] = useState(initialState);
   const [tagErrMsg, setTagErrMsg] = useState(null);
+  const [categoryErrMsg, setCategoryErrMsg] = useState(null);
   const { error, userTours } = useSelector((state) => ({
     ...state.tour,
   }));
@@ -33,7 +38,7 @@ const AddEditTour = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { title, description, tags } = tourData;
+  const { title, description, tags, category } = tourData;
   const { id } = useParams();
 
   useEffect(() => {
@@ -50,6 +55,9 @@ const AddEditTour = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!category) {
+      setCategoryErrMsg('Please select a category');
+    }
     if (!tags.length) {
       setTagErrMsg("Please provide some tags");
     }
@@ -64,23 +72,33 @@ const AddEditTour = () => {
       // handleClear();
     }
   };
+
+  const handleCategoryChange = (e) => {
+    setCategoryErrMsg(null);
+    setTourData({ ...tourData, category: e.target.value });
+  };
+
   const onInputChange = (e) => {
     const { name, value } = e.target;
     setTourData({ ...tourData, [name]: value });
   };
+
   const handleAddTag = (tag) => {
     setTagErrMsg(null);
     setTourData({ ...tourData, tags: [...tourData.tags, tag] });
   };
+
   const handleDeleteTag = (deleteTag) => {
     setTourData({
       ...tourData,
       tags: tourData.tags.filter((tag) => tag !== deleteTag),
     });
   };
+
   const handleClear = () => {
-    setTourData({ title: "", description: "", tags: [] });
+    setTourData({ title: "", description: "", tags: [], category: "" });
   };
+
   return (
     <div
       style={{
@@ -124,6 +142,8 @@ const AddEditTour = () => {
       <MDBCard alignment="center">
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} className="row g-3" noValidate>
+
+            <div>
             <MDBValidationItem feedback='Please provide title.' invalid className="col-md-12">
               <MDBInput
                 label="Enter Title"
@@ -135,6 +155,9 @@ const AddEditTour = () => {
                 required
               />
             </MDBValidationItem>
+            </div>
+
+            <div>
             <MDBValidationItem feedback='Please provide description.' invalid className="col-md-12">
               <MDBTextArea
                 label="Enter Description"
@@ -147,6 +170,29 @@ const AddEditTour = () => {
                 rows={4}
               />
             </MDBValidationItem>
+            </div>
+
+            <div className="col-md-12">
+              <select
+                className={`category-dropdown  ${
+                  categoryErrMsg ? 'form-input-error' : ''
+                }`}
+                onChange={handleCategoryChange}
+                value={category}
+              >
+                <option>Please select category</option>
+                {categoryOptions.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+
+              {categoryErrMsg && (
+                <div className="categoryErrMsg">{categoryErrMsg}</div>
+              )}
+            </div>
+
             <div className="col-md-12">
               <ChipInput
                 name="tags"
@@ -159,6 +205,7 @@ const AddEditTour = () => {
               />
               {tagErrMsg && <div className="tagErrMsg">{tagErrMsg}</div>}
             </div>
+
             <div className="d-flex justify-content-start">
               <FileBase
                 type="file"
@@ -168,6 +215,7 @@ const AddEditTour = () => {
                 }
               />
             </div>
+
             <div className="col-12">
               <MDBBtn style={{ width: "100%" }}>
                 {id ? "Update" : "Submit"}
