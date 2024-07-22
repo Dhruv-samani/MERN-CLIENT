@@ -8,7 +8,7 @@ import {
   MDBBtn,
   MDBIcon,
   MDBSpinner,
-  MDBValidationItem
+  MDBValidationItem,
 } from "mdb-react-ui-kit";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,10 +44,17 @@ const Register = () => {
     }
   };
 
-
   const onInputChange = (e) => {
     let { name, value } = e.target;
     setFormValue({ ...formValue, [name]: value });
+  };
+
+  const fadeInUpAnimation = {
+    animation: "fadeInUp 0.5s ease-out",
+  };
+
+  const buttonHoverStyle = {
+    transition: "all 0.3s ease",
   };
 
   return (
@@ -58,15 +65,19 @@ const Register = () => {
         maxWidth: "450px",
         alignContent: "center",
         marginTop: "120px",
+        ...fadeInUpAnimation,
       }}
     >
-      
       <MDBCard alignment="center">
         <MDBIcon fas icon="user-circle" className="fa-2x" />
         <h5>Sign Up</h5>
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} className="row g-3">
-            <MDBValidationItem feedback='Please provide First Name.' invalid className="col-md-6">
+            <MDBValidationItem
+              feedback="Please provide First Name."
+              invalid
+              className="col-md-6"
+            >
               <MDBInput
                 label="First Name"
                 type="text"
@@ -76,7 +87,11 @@ const Register = () => {
                 required
               />
             </MDBValidationItem>
-            <MDBValidationItem feedback='Please provide Last Name.' invalid className="col-md-6">
+            <MDBValidationItem
+              feedback="Please provide Last Name."
+              invalid
+              className="col-md-6"
+            >
               <MDBInput
                 label="Last Name"
                 type="text"
@@ -86,7 +101,11 @@ const Register = () => {
                 required
               />
             </MDBValidationItem>
-            <MDBValidationItem feedback='Please provide Email.' invalid className="col-md-12">
+            <MDBValidationItem
+              feedback="Please provide Email."
+              invalid
+              className="col-md-12"
+            >
               <MDBInput
                 label="Email"
                 type="email"
@@ -96,7 +115,11 @@ const Register = () => {
                 required
               />
             </MDBValidationItem>
-            <MDBValidationItem feedback='Please provide Password.' invalid className="col-md-12">
+            <MDBValidationItem
+              feedback="Please provide Password."
+              invalid
+              className="col-md-12"
+            >
               <MDBInput
                 label="Password"
                 type="password"
@@ -106,7 +129,11 @@ const Register = () => {
                 required
               />
             </MDBValidationItem>
-            <MDBValidationItem feedback='Please provide Confirm Password.' invalid className="col-md-12">
+            <MDBValidationItem
+              feedback="Please provide Confirm Password."
+              invalid
+              className="col-md-12"
+            >
               <MDBInput
                 label="Password Confirm"
                 type="password"
@@ -117,7 +144,10 @@ const Register = () => {
               />
             </MDBValidationItem>
             <div className="col-12">
-              <MDBBtn style={{ width: "100%" }} className="mt-2">
+              <MDBBtn
+                style={{ width: "100%", ...buttonHoverStyle }}
+                className="mt-2"
+              >
                 {loading && (
                   <MDBSpinner
                     size="sm"

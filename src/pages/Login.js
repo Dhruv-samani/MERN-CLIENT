@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { googleSignIn, login } from "../redux/features/authSlice";
 import { GoogleLogin } from "react-google-login";
-import { gapi } from 'gapi-script';
+import { gapi } from "gapi-script";
 
 const initialState = {
   email: "",
@@ -44,14 +44,11 @@ const Login = () => {
     setFormValue({ ...formValue, [name]: value });
   };
 
-
   const devEnv = process.env.NODE_ENV !== "production";
-  const clientId = devEnv ? "" : ""
-
-
+  const clientId = devEnv ? "" : "";
 
   const googleSuccess = (resp) => {
-    console.log('Login Success: currentUser:', resp.profileObj);
+    console.log("Login Success: currentUser:", resp.profileObj);
     const email = resp?.profileObj?.email;
     const name = resp?.profileObj?.name;
     const token = resp?.tokenId;
@@ -60,7 +57,7 @@ const Login = () => {
     dispatch(googleSignIn({ result, navigate, toast }));
   };
   const googleFailure = (error) => {
-    console.log('Login failed: res:', error);
+    console.log("Login failed: res:", error);
     toast.error(error);
   };
 
@@ -70,9 +67,17 @@ const Login = () => {
         clientId: "",
       });
     }
-    gapi.load('client:auth2', start);
+    gapi.load("client:auth2", start);
   }, []);
 
+  // Animation styles
+  const fadeInUpAnimation = {
+    animation: "fadeInUp 0.5s ease-out",
+  };
+
+  const buttonHoverStyle = {
+    transition: "all 0.3s ease",
+  };
 
   return (
     <div
@@ -82,6 +87,7 @@ const Login = () => {
         maxWidth: "450px",
         alignContent: "center",
         marginTop: "120px",
+        ...fadeInUpAnimation,
       }}
     >
       <MDBCard alignment="center">
@@ -89,7 +95,11 @@ const Login = () => {
         <h5>Sign In</h5>
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} noValidate className="row g-3">
-            <MDBValidationItem feedback='Please provide Email.' invalid className="col-md-12">
+            <MDBValidationItem
+              feedback="Please provide Email."
+              invalid
+              className="col-md-12"
+            >
               <MDBInput
                 label="Email"
                 type="email"
@@ -99,7 +109,11 @@ const Login = () => {
                 required
               />
             </MDBValidationItem>
-            <MDBValidationItem feedback='Please provide Password.' invalid className="col-md-12">
+            <MDBValidationItem
+              feedback="Please provide Password."
+              invalid
+              className="col-md-12"
+            >
               <MDBInput
                 label="Password"
                 type="password"
@@ -110,7 +124,11 @@ const Login = () => {
               />
             </MDBValidationItem>
             <div className="col-12">
-              <MDBBtn style={{ width: "100%" }} color='info' className="mt-2">
+              <MDBBtn
+                style={{ width: "100%", ...buttonHoverStyle }}
+                color="info"
+                className="mt-2"
+              >
                 {loading && (
                   <MDBSpinner
                     size="sm"
@@ -119,7 +137,8 @@ const Login = () => {
                     className="me-2"
                   />
                 )}
-                <MDBIcon className="me-2" fas  icon="sign-in-alt"/>Login
+                <MDBIcon className="me-2" fas icon="sign-in-alt" />
+                Login
               </MDBBtn>
             </div>
           </MDBValidation>

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import {
   MDBCard,
@@ -21,11 +20,10 @@ const initialState = {
   title: "",
   description: "",
   tags: [],
-  category: '',
+  category: "",
 };
 
-const categoryOptions = ['City', 'Beach', 'Mountain', 'Forest', 'Historic'];
-
+const categoryOptions = ["City", "Beach", "Mountain", "Forest", "Historic"];
 
 const AddEditTour = () => {
   const [tourData, setTourData] = useState(initialState);
@@ -44,7 +42,6 @@ const AddEditTour = () => {
   useEffect(() => {
     if (id) {
       const singleTour = userTours.find((tour) => tour._id === id);
-      console.log(singleTour);
       setTourData({ ...singleTour });
     }
   }, [id]);
@@ -56,7 +53,7 @@ const AddEditTour = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!category) {
-      setCategoryErrMsg('Please select a category');
+      setCategoryErrMsg("Please select a category");
     }
     if (!tags.length) {
       setTagErrMsg("Please provide some tags");
@@ -69,7 +66,6 @@ const AddEditTour = () => {
       } else {
         dispatch(updateTour({ id, updatedTourData, toast, navigate }));
       }
-      // handleClear();
     }
   };
 
@@ -99,6 +95,15 @@ const AddEditTour = () => {
     setTourData({ title: "", description: "", tags: [], category: "" });
   };
 
+  // Animation styles
+  const fadeInUpAnimation = {
+    animation: "fadeInUp 0.5s ease-out",
+  };
+
+  const buttonHoverStyle = {
+    transition: "all 0.3s ease",
+  };
+
   return (
     <div
       style={{
@@ -107,27 +112,20 @@ const AddEditTour = () => {
         maxWidth: "450px",
         alignContent: "center",
         marginTop: "120px",
+        ...fadeInUpAnimation,
       }}
       className="container"
     >
-        {id ? <MDBBtn
-          tag="a"
-          color="none"
-          style={{ float: "left", color: "#000", marginTop: "5px" }}
-          onClick={() => navigate("/deshboard")}
-        >
-          <MDBIcon
-            fas
-            size="lg"
-            icon="long-arrow-alt-left"
-            style={{ float: "left" }}
-          />
-        </MDBBtn> : 
-        <MDBBtn
+      <MDBBtn
         tag="a"
         color="none"
-        style={{ float: "left", color: "#000", marginTop: "5px" }}
-        onClick={() => navigate("/")}
+        style={{
+          float: "left",
+          color: "#000",
+          marginTop: "5px",
+          ...buttonHoverStyle,
+        }}
+        onClick={() => navigate(id ? "/dashboard" : "/")}
       >
         <MDBIcon
           fas
@@ -136,15 +134,16 @@ const AddEditTour = () => {
           style={{ float: "left" }}
         />
       </MDBBtn>
-      }
-        <h5>{id ? "Update Tour" : "Add Tour"}</h5>
-        <hr style={{ maxWidth: "600px" }} />
-      <MDBCard alignment="center">
+      <h5>{id ? "Update Tour" : "Add Tour"}</h5>
+      <hr style={{ maxWidth: "600px" }} />
+      <MDBCard alignment="center" className="mb-5">
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} className="row g-3" noValidate>
-
-            <div>
-            <MDBValidationItem feedback='Please provide title.' invalid className="col-md-12">
+            <MDBValidationItem
+              feedback="Please provide title."
+              invalid
+              className="col-md-12"
+            >
               <MDBInput
                 label="Enter Title"
                 type="text"
@@ -153,12 +152,15 @@ const AddEditTour = () => {
                 onChange={onInputChange}
                 className="form-control"
                 required
+                style={{ transition: "all 0.3s ease" }}
               />
             </MDBValidationItem>
-            </div>
 
-            <div>
-            <MDBValidationItem feedback='Please provide description.' invalid className="col-md-12">
+            <MDBValidationItem
+              feedback="Please provide description."
+              invalid
+              className="col-md-12"
+            >
               <MDBTextArea
                 label="Enter Description"
                 type="text"
@@ -168,28 +170,28 @@ const AddEditTour = () => {
                 className="form-control"
                 required
                 rows={4}
+                style={{ transition: "all 0.3s ease" }}
               />
             </MDBValidationItem>
-            </div>
 
             <div className="col-md-12">
               <select
-                className={`category-dropdown  ${
-                  categoryErrMsg ? 'form-input-error' : ''
+                className={`form-select ${
+                  categoryErrMsg ? "is-invalid" : ""
                 }`}
                 onChange={handleCategoryChange}
                 value={category}
+                style={{ transition: "all 0.3s ease" }}
               >
-                <option>Please select category</option>
+                <option value="">Please select category</option>
                 {categoryOptions.map((option, index) => (
                   <option key={index} value={option}>
                     {option}
                   </option>
                 ))}
               </select>
-
               {categoryErrMsg && (
-                <div className="categoryErrMsg">{categoryErrMsg}</div>
+                <div className="invalid-feedback">{categoryErrMsg}</div>
               )}
             </div>
 
@@ -202,8 +204,11 @@ const AddEditTour = () => {
                 value={tags}
                 onAdd={(tag) => handleAddTag(tag)}
                 onDelete={(tag) => handleDeleteTag(tag)}
+                style={{ transition: "all 0.3s ease" }}
               />
-              {tagErrMsg && <div className="tagErrMsg">{tagErrMsg}</div>}
+              {tagErrMsg && (
+                <div className="text-danger mt-1">{tagErrMsg}</div>
+              )}
             </div>
 
             <div className="d-flex justify-content-start">
@@ -217,11 +222,20 @@ const AddEditTour = () => {
             </div>
 
             <div className="col-12">
-              <MDBBtn style={{ width: "100%" }}>
+              <MDBBtn
+                style={{
+                  width: "100%",
+                  ...buttonHoverStyle,
+                }}
+                className="mt-2"
+              >
                 {id ? "Update" : "Submit"}
               </MDBBtn>
               <MDBBtn
-                style={{ width: "100%" }}
+                style={{
+                  width: "100%",
+                  ...buttonHoverStyle,
+                }}
                 className="mt-2"
                 color="danger"
                 onClick={handleClear}

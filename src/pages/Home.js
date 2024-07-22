@@ -1,27 +1,43 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { MDBBtn, MDBCol, MDBContainer, MDBRow, MDBTypography } from "mdb-react-ui-kit";
+import {
+  MDBBtn,
+  MDBCol,
+  MDBContainer,
+  MDBRow,
+  MDBTypography,
+} from "mdb-react-ui-kit";
 import { useDispatch, useSelector } from "react-redux";
-import { getTours, setCurrentPage, getAllTags } from "../redux/features/tourSlice";
+import {
+  getTours,
+  setCurrentPage,
+  getAllTags,
+} from "../redux/features/tourSlice";
 import CardTour from "../components/CardTour";
 import Spinner from "../components/Spinner";
 import Pagination from "../components/Pagination";
 import { useLocation, useNavigate } from "react-router-dom";
-import PopularTags from '../components/PopularTags';
-import Categories from '../components/Categories';
+import PopularTags from "../components/PopularTags";
+import Categories from "../components/Categories";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 const Home = () => {
-  const { tours, loading, currentPage, numberOfPages, totalToursData, totalTags } = useSelector(
-    (state) => ({
-      ...state.tour,
-    })
-  );
-
+  const {
+    tours,
+    loading,
+    currentPage,
+    numberOfPages,
+    totalToursData,
+    totalTags,
+  } = useSelector((state) => ({
+    ...state.tour,
+  }));
+  // console.log("🚀  totalTags:", totalTags)
+  // console.log("🚀  totalToursData:", totalToursData);
 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
@@ -32,7 +48,7 @@ const Home = () => {
     }
 
     prevValue[name]++;
-    delete prevValue['undefined'];
+    delete prevValue["undefined"];
     return prevValue;
   }, {});
 
@@ -53,10 +69,10 @@ const Home = () => {
 
   useEffect(() => {
     checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
+    window.addEventListener("resize", checkScreenSize);
 
     return () => {
-      window.removeEventListener('resize', checkScreenSize);
+      window.removeEventListener("resize", checkScreenSize);
     };
   }, []);
 
@@ -64,13 +80,11 @@ const Home = () => {
     dispatch(getAllTags());
   }, []);
 
-
   const dispatch = useDispatch();
   const query = useQuery();
   const searchQuery = query.get("searchQuery");
   const location = useLocation();
   const navigate = useNavigate();
-
 
   useEffect(() => {
     dispatch(getTours(currentPage));
@@ -112,31 +126,30 @@ const Home = () => {
       </MDBRow>
 
       {isSmallScreen ? (
-          <div className="mt-4">
-            <PopularTags totalTags={totalTags} />
-            <Categories categoryCount={categoryCount} />
-            <MDBBtn
-              className="mt-3"
-              style={{ width: '100%' }}
-              onClick={() => navigate('/tours')}
-            >
-              View all Tours
-            </MDBBtn>
-          </div>
-        ) : (
-          <MDBCol size="3" className="mt-4">
-            <PopularTags totalTags={totalTags} />
-            <Categories categoryCount={categoryCount} />
-            <MDBBtn
-              className="mt-3"
-              style={{ width: '100%' }}
-              onClick={() => navigate('/tours')}
-            >
-              View all Tours
-            </MDBBtn>
-          </MDBCol>
-        )}
-
+        <div className="mt-4">
+          <PopularTags totalTags={totalTags} />
+          <Categories categoryCount={categoryCount} />
+          <MDBBtn
+            className="mt-3"
+            style={{ width: "100%" }}
+            onClick={() => navigate("/tours")}
+          >
+            View all Tours
+          </MDBBtn>
+        </div>
+      ) : (
+        <MDBCol size="3" className="mt-4">
+          <PopularTags totalTags={totalTags} />
+          <Categories categoryCount={categoryCount} />
+          <MDBBtn
+            className="mt-3"
+            style={{ width: "100%" }}
+            onClick={() => navigate("/tours")}
+          >
+            View all Tours
+          </MDBBtn>
+        </MDBCol>
+      )}
 
       {tours.length > 0 && !searchQuery && (
         <Pagination

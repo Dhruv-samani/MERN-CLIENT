@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../api";
 
-
 export const createTour = createAsyncThunk(
   "tour/createTour",
   async ({ updatedTourData, navigate, toast }, { rejectWithValue }) => {
@@ -16,7 +15,6 @@ export const createTour = createAsyncThunk(
   }
 );
 
-
 export const getTours = createAsyncThunk(
   "tour/getTours",
   async (page, { rejectWithValue }) => {
@@ -28,7 +26,6 @@ export const getTours = createAsyncThunk(
     }
   }
 );
-
 
 export const getTour = createAsyncThunk(
   "tour/getTour",
@@ -42,7 +39,6 @@ export const getTour = createAsyncThunk(
   }
 );
 
-
 export const likeTour = createAsyncThunk(
   "tour/likeTour",
   async ({ _id }, { rejectWithValue }) => {
@@ -54,7 +50,6 @@ export const likeTour = createAsyncThunk(
     }
   }
 );
-
 
 export const getToursByUser = createAsyncThunk(
   "tour/getToursByUser",
@@ -68,7 +63,6 @@ export const getToursByUser = createAsyncThunk(
   }
 );
 
-
 export const deleteTour = createAsyncThunk(
   "tour/deleteTour",
   async ({ id, toast }, { rejectWithValue }) => {
@@ -81,7 +75,6 @@ export const deleteTour = createAsyncThunk(
     }
   }
 );
-
 
 export const updateTour = createAsyncThunk(
   "tour/updateTour",
@@ -97,7 +90,6 @@ export const updateTour = createAsyncThunk(
   }
 );
 
-
 export const searchTours = createAsyncThunk(
   "tour/searchTours",
   async (searchQuery, { rejectWithValue }) => {
@@ -109,7 +101,6 @@ export const searchTours = createAsyncThunk(
     }
   }
 );
-
 
 export const getToursByTag = createAsyncThunk(
   "tour/getToursByTag",
@@ -123,7 +114,6 @@ export const getToursByTag = createAsyncThunk(
   }
 );
 
-
 export const getRelatedTours = createAsyncThunk(
   "tour/getRelatedTours",
   async (tags, { rejectWithValue }) => {
@@ -136,17 +126,16 @@ export const getRelatedTours = createAsyncThunk(
   }
 );
 
-
 export const getAllTags = createAsyncThunk(
-  'tour/getAllTags',
+  "tour/getAllTags",
   async (_, { rejectWithValue }) => {
     try {
       const response = await api.getAllTags();
-      console.log('getAllTags() - response', response);
+      // console.log('getAllTags() - response', response);
 
       return response.data;
     } catch (error) {
-      console.log('getAllTags() - error: ', error);
+      // console.log('getAllTags() - error: ', error);
 
       return rejectWithValue(error.response.data);
     }
@@ -154,15 +143,15 @@ export const getAllTags = createAsyncThunk(
 );
 
 export const loadMoreTours = createAsyncThunk(
-  'tour/loadMoreTours',
+  "tour/loadMoreTours",
   async ({ skip, limit }, { rejectWithValue }) => {
     try {
       const response = await api.loadMoreTours({ skip, limit });
-      console.log('loadMoreTours() - response', response);
+      console.log("loadMoreTours() - response", response);
 
       return response.data;
     } catch (error) {
-      console.log('loadMoreTours() - error: ', error);
+      console.log("loadMoreTours() - error: ", error);
 
       return rejectWithValue(error.response.data);
     }
@@ -191,7 +180,7 @@ const tourSlice = createSlice({
       state.currentPage = action.payload;
     },
     clearError(state) {
-      state.error = '';
+      state.error = "";
     },
   },
   extraReducers: {
@@ -285,7 +274,7 @@ const tourSlice = createSlice({
       state.error = action.payload.message;
     },
 
-    [likeTour.pending]: (state, action) => { },
+    [likeTour.pending]: (state, action) => {},
     [likeTour.fulfilled]: (state, action) => {
       state.loading = false;
       const {

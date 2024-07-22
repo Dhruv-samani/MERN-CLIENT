@@ -4,17 +4,31 @@ const devEnv = process.env.NODE_ENV !== "production";
 
 const { REACT_APP_DEV_API, REACT_APP_PROD_API } = process.env;
 
+// const API = axios.create({
+//   baseURL: `${devEnv ? REACT_APP_DEV_API : REACT_APP_PROD_API}`,
+// });
+
 const API = axios.create({
-  baseURL: `${devEnv ? REACT_APP_DEV_API : REACT_APP_PROD_API}`,
+  baseURL: "https://2aa8-2401-4900-8898-6503-6dad-d5fd-b2fd-eb3.ngrok-free.app",
 });
 
 // const API = axios.create({ baseURL: "http://localhost:4000" })
 
+// API.interceptors.request.use((req) => {
+//   if (localStorage.getItem("profile")) {
+//     req.headers.Authorization = `Bearer ${
+//       JSON.parse(localStorage.getItem("profile")).token
+//     }`;
+//   }
+//   return req;
+// });
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("profile")) {
-    req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem("profile")).token
-      }`;
+    req.headers.Authorization = `Bearer ${
+      JSON.parse(localStorage.getItem("profile")).token
+    }`;
   }
+  req.headers["ngrok-skip-browser-warning"] = "69420";
   return req;
 });
 
@@ -39,11 +53,10 @@ export const likeTour = (id) => API.patch(`/tour/like/${id}`);
 
 export const loadMoreTours = ({ skip, limit }) =>
   API.get(`/tours/load-more?skip=${skip}&limit=${limit}`);
-export const getAllTags = () => API.get('/tours/tags');
-
+export const getAllTags = () => API.get("/tours/tags");
 
 export const getProfile = ({ _id }) => API.get(`/profiles/${_id}`);
 export const updateProfile = ({ _id, data }) =>
   API.put(`/profiles/${_id}`, data);
 export const uploadImage = (imageData) =>
-  API.post('/uploads/images', imageData);
+  API.post("/uploads/images", imageData);

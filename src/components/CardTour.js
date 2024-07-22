@@ -13,7 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { likeTour } from "../redux/features/tourSlice";
-import CategoryBadge from './CategoryBadge';
+import { motion } from "framer-motion";
 
 const CardTour = ({
   imageFile,
@@ -27,8 +27,8 @@ const CardTour = ({
 }) => {
   const { user } = useSelector((state) => ({ ...state.auth }));
   const userId = user?.result?._id || user?.result?.googleId;
-
   const dispatch = useDispatch();
+
   const excerpt = (str) => {
     if (str.length > 45) {
       str = str.substring(0, 45) + " ...";
@@ -74,44 +74,60 @@ const CardTour = ({
 
   return (
     <MDBCardGroup>
-      <MDBCard className="h-100 mt-2 d-sm-flex" style={{ maxWidth: "20rem" }}>
-      <Link to={`/tour/${_id}`}>
-        <MDBCardImage
-          src={imageFile}
-          alt={title}
-          position="top"
-          style={{ maxWidth: "100%", height: "180px" }}
-        />
-        </Link>
-        <div className="top-left">{name}</div>
-        <div className="top-right"><CategoryBadge category={category} /></div>
-        <span className="text-start tag-card">
-          {tags.map((tag, index) => (
-            <Link key={index} to={`/tours/tag/${tag}`}>{" "} #{tag}</Link>
-          ))}
-          <MDBBtn
-            style={{ float: "right" }}
-            tag="a"
-            color="none"
-            onClick={!user?.result ? null : handleLike}
-          >
-            {!user?.result ? (
-              <MDBTooltip title="Please login to like tour" tag="a">
-                <Link to="/login"> <Likes /> </Link>
-              </MDBTooltip>
-            ) : (
-              <Likes />
-            )}
-          </MDBBtn>
-        </span>
-        <MDBCardBody>
-          <MDBCardTitle className="text-start">{title}</MDBCardTitle>
-          <MDBCardText className="text-start">
-            {excerpt(description)}
-            <Link to={`/tour/${_id}`}>Read More</Link>
-          </MDBCardText>
-        </MDBCardBody>
-      </MDBCard>
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        transition={{ type: "spring", stiffness: 300 }}
+      >
+        <MDBCard className="h-100 mt-2 d-sm-flex shadow-lg" style={{ width: "20rem", borderRadius: "15px", overflow: "hidden" }}>
+          <div className="position-relative">
+            <Link to={`/tour/${_id}`}>
+              <MDBCardImage
+                src={imageFile}
+                alt={title}
+                position="top"
+                style={{ maxWidth: "100%", height: "200px", objectFit: "cover" }}
+              />
+            </Link>
+            <div className="position-absolute top-0 start-0 m-2 px-2 py-1 bg-white rounded-pill">
+              <small className="fw-bold">{name}</small>
+            </div>
+            <div className="position-absolute top-0 end-0 m-2 px-2 py-1 bg-info text-white rounded-pill">
+              <small>{category}</small>
+            </div>
+          </div>
+          <MDBCardBody className="d-flex flex-column">
+            <MDBCardTitle className="fw-bold mb-2">{title}</MDBCardTitle>
+            <MDBCardText className="text-muted mb-3">
+              {excerpt(description)}
+              <Link to={`/tour/${_id}`} className="text-info"> Read More</Link>
+            </MDBCardText>
+            <div className="mt-auto">
+              <div className="d-flex justify-content-between align-items-center">
+                <div>
+                  {tags.map((tag, index) => (
+                    <Link key={index} to={`/tours/tag/${tag}`} className="text-decoration-none">
+                      <span className="badge bg-light text-dark me-1">#{tag}</span>
+                    </Link>
+                  ))}
+                </div>
+                <MDBBtn
+                  color="none"
+                  className="m-0 p-1"
+                  onClick={!user?.result ? null : handleLike}
+                >
+                  {!user?.result ? (
+                    <MDBTooltip title="Please login to like tour" tag="a">
+                      <Link to="/login"><Likes /></Link>
+                    </MDBTooltip>
+                  ) : (
+                    <Likes />
+                  )}
+                </MDBBtn>
+              </div>
+            </div>
+          </MDBCardBody>
+        </MDBCard>
+      </motion.div>
     </MDBCardGroup>
   );
 };

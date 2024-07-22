@@ -1,47 +1,44 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import * as api from '../api';
-
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import * as api from "../api";
 
 export const getProfile = createAsyncThunk(
-  'tour/getProfile',
+  "tour/getProfile",
   async ({ _id }, { rejectWithValue }) => {
     try {
       const response = await api.getProfile({ _id });
-      console.log('getProfile() - response', response);
+      // console.log('getProfile() - response', response);
 
       return response.data;
     } catch (error) {
-      console.log('getProfile() - error: ', error);
+      console.log("getProfile() - error: ", error);
 
       return rejectWithValue(error.response.data);
     }
   }
 );
 
-
 export const updateProfile = createAsyncThunk(
-  'tour/updateProfile',
+  "tour/updateProfile",
   async ({ _id, data }, { rejectWithValue }) => {
     try {
       const response = await api.updateProfile({ _id, data });
-      console.log('updateProfile() - response', response);
+      // console.log('updateProfile() - response', response);
 
       return response.data;
     } catch (error) {
-      console.log('updateProfile() - error: ', error);
+      // console.log('updateProfile() - error: ', error);
 
       return rejectWithValue(error.response.data);
     }
   }
 );
 
-
 const profileSlice = createSlice({
-  name: 'profile',
+  name: "profile",
 
   initialState: {
     userDetail: null,
-    error: '',
+    error: "",
     loading: false,
   },
 
